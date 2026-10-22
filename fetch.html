@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FETCH, DOM AND ASYNC</title>
+  </head>
+  <style>
+    #text {
+      height: 100px;
+      width: 300px;
+      background-color: #d39038;
+      color: white;
+      border-radius: 10px;
+      font-size: 35px;
+      margin-top: 50px;
+      border: none;
+    }
+    #p {
+      font-size: 30px;
+      margin-top: 30px;
+      color: green;
+    }
+  </style>
+  <body>
+    <div id="p">Check the text here...</div>
+    <button id="text">text</button>
+
+    <script>
+      document.getElementById("text").addEventListener("click", getText);
+
+      function getText() {
+        fetch("https://dummyjson.com/quotes/random")
+          .then(function (res) {
+            return res.json();
+          })
+          .then(function (data) {
+            const quote = `'${data.quote}' - '${data.author}'`;
+
+            document.getElementById("p").innerText = quote;
+          })
+
+          .catch(function (error) {
+            console.log("Error", error);
+            document.getElementById("p").innerText = "Failed to load quote.";
+          });
+      }
+    </script>
+  </body>
+</html>
